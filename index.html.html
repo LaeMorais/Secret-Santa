@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Secret Piraats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sea:#06221d; --deep:#0b3329; --glow:#b8ff3c; --hazard:#ffd21f; --holly:#d7263d;
+  --bone:#efe4c8; --ink:#efe4c8; --muted:#9fbcab; --line:rgba(184,255,60,.28);
+  --card:rgba(11,51,41,.72); --btn-ink:#06221d;
+  --display:"Pirata One","UnifrakturCook",Georgia,serif;
+  --body:"Rubik",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --sea:#efe4c8; --deep:#e2d3ac; --glow:#2f7a12; --hazard:#a26b00; --holly:#b01c30;
+    --bone:#06221d; --ink:#0c2a22; --muted:#4d6457; --line:rgba(47,122,18,.35);
+    --card:rgba(255,250,236,.75); --btn-ink:#efe4c8;
+    color-scheme:light;
+  }
+}
+:root[data-theme="dark"]{color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; min-height:100vh; font-family:var(--body); font-size:17px; line-height:1.5;
+  color:var(--ink); background:var(--sea);
+  background-image:
+    radial-gradient(ellipse 90% 45% at 50% -5%, color-mix(in srgb,var(--glow) 22%,transparent), transparent 70%),
+    repeating-linear-gradient(-45deg, transparent 0 22px, color-mix(in srgb,var(--glow) 4%,transparent) 22px 24px);
+  background-attachment:fixed;
+}
+main{max-width:560px; margin:0 auto; padding:28px 20px 48px}
+
+/* hero */
+.hero{text-align:center; padding:12px 0 8px}
+.mark{width:132px; height:132px; display:block; margin:0 auto 4px; filter:drop-shadow(0 0 18px color-mix(in srgb,var(--glow) 55%,transparent))}
+.mark .spin{transform-origin:60px 66px; animation:spin 24s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1{
+  font-family:var(--display); font-weight:400; font-size:clamp(3.2rem,15vw,5.2rem); line-height:.95;
+  margin:0; color:var(--glow); letter-spacing:.01em;
+  text-shadow:0 0 6px color-mix(in srgb,var(--glow) 70%,transparent),0 0 28px color-mix(in srgb,var(--glow) 45%,transparent);
+}
+.sub{margin:10px 0 0; color:var(--muted); font-size:1rem}
+.tape{
+  margin:22px -20px 26px; padding:6px 0; overflow:hidden; white-space:nowrap;
+  background:repeating-linear-gradient(-45deg,var(--hazard) 0 18px,#1b1b12 18px 36px);
+  transform:rotate(-2deg);
+}
+.tape span{display:inline-block; background:var(--hazard); color:#1b1b12; font-weight:700; font-size:.82rem; padding:2px 12px; margin-left:calc(50% - 120px)}
+
+/* picker */
+h2{font-family:var(--display); font-weight:400; font-size:2.2rem; line-height:1.05; margin:0 0 4px; color:var(--bone)}
+.lead{margin:0 0 18px; color:var(--muted)}
+.crew{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; list-style:none; padding:0; margin:0}
+.crew button{
+  width:100%; text-align:left; font:500 1rem/1.25 var(--body); color:var(--ink);
+  background:var(--card); border:1.5px solid var(--line); border-radius:14px 4px 14px 4px;
+  padding:14px 14px; cursor:pointer; min-height:56px;
+}
+.crew button:hover{border-color:var(--glow)}
+.crew button:focus-visible,.btn:focus-visible,.link:focus-visible{outline:3px solid var(--hazard); outline-offset:2px}
+.crew button[disabled]{opacity:.35; cursor:not-allowed}
+.crew button.mine{border-color:var(--glow); box-shadow:0 0 0 1px var(--glow),0 0 18px color-mix(in srgb,var(--glow) 35%,transparent)}
+
+.ask{display:flex; flex-direction:column; gap:12px}
+.ask input{
+  font:500 1.15rem/1.3 var(--body); color:var(--ink); background:var(--card);
+  border:2px solid var(--line); border-radius:14px 4px 14px 4px; padding:16px; min-height:56px; width:100%;
+}
+.ask input::placeholder{color:var(--muted); opacity:.8}
+.ask input:focus{outline:none; border-color:var(--glow); box-shadow:0 0 0 3px color-mix(in srgb,var(--glow) 30%,transparent)}
+.msg{min-height:1.5em; margin:12px 0 0; color:var(--hazard); font-weight:500}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+/* panels */
+.panel{
+  background:var(--card); border:1.5px solid var(--line); border-radius:22px 6px 22px 6px;
+  padding:26px 22px; text-align:center; backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+}
+.panel p{margin:0 0 14px}
+.who{font-family:var(--display); font-size:2.4rem; line-height:1.05; color:var(--bone); margin:4px 0 10px}
+.btns{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:8px}
+.btn{
+  font:700 1rem/1 var(--body); border-radius:999px; padding:15px 24px; cursor:pointer; border:2px solid var(--glow);
+  background:var(--glow); color:var(--btn-ink); min-height:50px;
+}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line)}
+.link{background:none; border:0; color:var(--muted); font:400 .9rem var(--body); text-decoration:underline; cursor:pointer; padding:8px; margin-top:14px}
+
+/* reveal */
+.chest{width:150px; height:120px; margin:0 auto 6px; display:block}
+.chest .lid{transform-origin:20px 52px; transition:transform .7s cubic-bezier(.3,1.6,.5,1)}
+.open .chest .lid{transform:rotate(-38deg)}
+.chest .beam{opacity:0; transition:opacity .5s .35s}
+.open .chest .beam{opacity:1}
+.target{
+  font-family:var(--display); font-size:clamp(2.8rem,12vw,4rem); line-height:1; margin:8px 0 14px; color:var(--glow);
+  text-shadow:0 0 8px color-mix(in srgb,var(--glow) 70%,transparent),0 0 30px color-mix(in srgb,var(--glow) 40%,transparent);
+  opacity:0; transform:scale(.85); transition:opacity .5s .55s, transform .6s .55s cubic-bezier(.3,1.6,.5,1);
+}
+.open .target{opacity:1; transform:none}
+.warn{color:var(--holly); font-weight:500}
+.foot{margin-top:30px; text-align:center; color:var(--muted); font-size:.85rem}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){
+  .mark .spin{animation:none}
+  .chest .lid,.chest .beam,.target{transition:none}
+}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <svg class="mark" viewBox="0 0 120 130" aria-hidden="true">
+      <g class="spin">
+        <circle cx="60" cy="66" r="50" fill="var(--hazard)"/>
+        <g fill="#1b1b12">
+          <path d="M60 66 L60 22 A44 44 0 0 1 98.1 44 Z"/>
+          <path d="M60 66 L98.1 88 A44 44 0 0 1 60 110 Z"/>
+          <path d="M60 66 L21.9 88 A44 44 0 0 1 21.9 44 Z"/>
+        </g>
+      </g>
+      <circle cx="60" cy="66" r="15" fill="var(--hazard)" stroke="#1b1b12" stroke-width="3"/>
+      <!-- skull -->
+      <circle cx="60" cy="64" r="9" fill="#1b1b12"/>
+      <rect x="55" y="68" width="10" height="7" rx="2" fill="#1b1b12"/>
+      <circle cx="56.5" cy="63" r="2.4" fill="var(--glow)"/><circle cx="63.5" cy="63" r="2.4" fill="var(--glow)"/>
+      <!-- santa hat -->
+      <path d="M38 22 Q60 -6 84 18 Q92 30 98 26 L96 34 Q88 36 82 28 Z" fill="var(--holly)"/>
+      <rect x="34" y="18" width="52" height="11" rx="5.5" fill="var(--bone)" transform="rotate(-6 60 23)"/>
+      <circle cx="99" cy="30" r="6" fill="var(--bone)"/>
+    </svg>
+    <h1>Secret Piraats</h1>
+    <p class="sub">Amigo secreto da tripulação. Natal de 2026.</p>
+    <p class="sub" style="color:var(--hazard);font-weight:500;margin-top:4px">Presente até 20 € no máximo.</p>
+  </header>
+
+  <div class="tape" aria-hidden="true"><span>☢ Carga altamente secreta ☢</span></div>
+
+  <section id="pick">
+    <h2>Quem és tu, marujo?</h2>
+    <p class="lead">Escreve o teu nome e apelido. Só vais ver a quem tens de oferecer.</p>
+    <form id="nameForm" class="ask" autocomplete="off" novalidate>
+      <label for="nameIn" class="sr">O teu nome</label>
+      <input id="nameIn" type="text" inputmode="text" autocapitalize="words" spellcheck="false" placeholder="O teu nome e apelido" required>
+      <button class="btn" type="submit">Entrar a bordo</button>
+    </form>
+    <p id="msg" class="msg" role="alert"></p>
+  </section>
+
+  <section id="confirm" class="panel" hidden>
+    <p>És mesmo</p>
+    <div class="who" id="confirmName"></div>
+    <p class="lead">Se não fores, estragas o segredo a alguém.</p>
+    <div class="btns">
+      <button class="btn" id="yes" type="button">Sim, sou eu</button>
+      <button class="btn ghost" id="no" type="button">Voltar</button>
+    </div>
+  </section>
+
+  <section id="reveal" class="panel" hidden aria-live="polite">
+    <svg class="chest" viewBox="0 0 150 120" aria-hidden="true">
+      <path class="beam" d="M40 54 L10 0 L140 0 L110 54 Z" fill="var(--glow)" opacity=".35"/>
+      <rect x="20" y="54" width="110" height="58" rx="6" fill="#6b3d1f" stroke="#1b1b12" stroke-width="3"/>
+      <rect x="20" y="72" width="110" height="7" fill="var(--hazard)"/>
+      <rect x="66" y="64" width="18" height="22" rx="3" fill="var(--hazard)" stroke="#1b1b12" stroke-width="2"/>
+      <g class="lid">
+        <path d="M20 54 Q20 24 75 24 Q130 24 130 54 Z" fill="#7d4a26" stroke="#1b1b12" stroke-width="3"/>
+        <rect x="20" y="44" width="110" height="7" fill="var(--holly)"/>
+      </g>
+    </svg>
+    <p><span id="meName"></span>, o teu presente vai para</p>
+    <div class="target" id="target"></div>
+    <p>Orçamento máximo: 20 €.</p>
+    <p class="warn">Guarda o segredo. Quem falar vai pela prancha.</p>
+    <div class="btns"><button class="btn ghost" id="hide" type="button">Esconder</button></div>
+  </section>
+
+  <section id="back" class="panel" hidden>
+    <p>Bem-vindo de volta,</p>
+    <div class="who" id="backName"></div>
+    <div class="btns"><button class="btn" id="show" type="button">Ver o meu alvo outra vez</button></div>
+    <button class="link" id="reset" type="button">Este telemóvel não é teu? Trocar de pessoa</button>
+  </section>
+
+  <p class="foot">Sorteio feito ao acaso. Ninguém tirou o próprio nome.</p>
+</main>
+
+<script>
+(function(){
+  var CREW = ["Lucas Morais", "Alexandra Graça", "Ines Vale", "Isabel Sobral", "José Fernandes", "Luisa Teles", "Nuno Fonseca", "Pedro Borralho", "Ricardo Lopes", "Sara Gonçalves", "Sara Pereira", "Sofia Fonte"];
+  var SEED = 1550861431;
+  var BOX = ["4AS0+6Od25uEsWrZVdmU", "VCMh5u3/cVEQ0xo=", "CVuk4uSA1af6WIPxVQ==", "7nUtAMGEWaKM5y92xmf3AQ==", "SpGtHom5oXZA", "HpUpA9aYYzAyiiOCxQ==", "57mgJd3aksn4HbY=", "rNM7KuavLIepYUui", "HeykUPBColBw/M1S", "9xouRrYpEuhJW0POxRk=", "sQm560ovlbQA1/Z8S3w2", "AzkofJ80G3XYK2Lx"];
+  var ALIAS = {"Sara Gonçalves": "henriqueta pereira"};
+  var KEY = "secret-piraats-2026";
+
+  function decode(i){
+    var raw = atob(BOX[i]), bytes = new Uint8Array(raw.length), x = (SEED + i*7919) >>> 0;
+    for (var k=0;k<raw.length;k++){
+      x = (Math.imul(x,1103515245) + 12345) >>> 0;
+      bytes[k] = raw.charCodeAt(k) ^ ((x >>> 16) & 255);
+    }
+    return new TextDecoder().decode(bytes);
+  }
+  function load(){ try { var v = localStorage.getItem(KEY); return v === null ? null : parseInt(v,10); } catch(e){ return null; } }
+  function save(i){ try { localStorage.setItem(KEY, String(i)); } catch(e){} }
+  function clear(){ try { localStorage.removeItem(KEY); } catch(e){} }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var pending = null;
+
+  function show(id){
+    ["pick","confirm","reveal","back"].forEach(function(s){ $(s).hidden = (s !== id); });
+    window.scrollTo(0,0);
+  }
+
+  function norm(s){ return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z\s]/g," ").trim().split(/\s+/).filter(Boolean); }
+  function findCrew(text){
+    var typed = norm(text);
+    if (!typed.length) return [];
+    var exact = CREW.findIndex(function(name){ return norm(name).join(" ") === typed.join(" "); });
+    if (exact !== -1) return [exact];
+    var hits = [];
+    CREW.forEach(function(name,i){
+      var tokens = norm(name + " " + (ALIAS[name] || ""));
+      if (typed.every(function(t){ return tokens.indexOf(t) !== -1; })) hits.push(i);
+    });
+    return hits;
+  }
+  function say(t){ $("msg").textContent = t; }
+
+  $("nameForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var hits = findCrew($("nameIn").value), mine = load();
+    if (!$("nameIn").value.trim()){ say("Escreve o teu nome primeiro."); return; }
+    if (hits.length === 0){ say("Esse nome não está na tripulação. Confirma o nome e apelido."); return; }
+    if (hits.length > 1){ say("Há mais do que um marujo com esse nome. Escreve também o apelido."); return; }
+    var i = hits[0];
+    if (mine !== null && mine !== i){ say("Este telemóvel já está guardado para " + CREW[mine] + "."); return; }
+    say("");
+    if (mine === i){ openReveal(i); return; }
+    pending = i; $("confirmName").textContent = CREW[i] + "?"; show("confirm");
+  });
+
+  function openReveal(i){
+    $("meName").textContent = CREW[i].split(" ")[0];
+    $("target").textContent = decode(i);
+    var r = $("reveal"); r.classList.remove("open"); show("reveal");
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ r.classList.add("open"); }); });
+  }
+
+  $("yes").addEventListener("click", function(){ save(pending); openReveal(pending); });
+  $("no").addEventListener("click", function(){ pending = null; $("nameIn").value=""; show("pick"); $("nameIn").focus(); });
+  $("hide").addEventListener("click", function(){
+    $("target").textContent = ""; $("reveal").classList.remove("open");
+    var m = load(); if (m !== null){ $("backName").textContent = CREW[m]; show("back"); } else show("pick");
+  });
+  $("show").addEventListener("click", function(){ var m = load(); if (m !== null) openReveal(m); });
+  $("reset").addEventListener("click", function(){
+    if (confirm("Trocar de pessoa neste telemóvel?")){ clear(); $("nameIn").value=""; say(""); show("pick"); }
+  });
+
+  var m = load();
+  if (m !== null && m >= 0 && m < CREW.length){ $("backName").textContent = CREW[m]; show("back"); }
+  else show("pick");
+})();
+</script>
+</body>
+</html>
